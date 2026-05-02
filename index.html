@@ -46,9 +46,9 @@
             z-index: 10;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: flex-start; 
             align-items: center;
-            padding: 40px 20px;
+            padding: 15px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.8s ease;
@@ -60,17 +60,19 @@
         }
 
         .content-card {
-            max-width: 600px;
-            width: 100%;
+            max-width: 360px;
+            width: 90%;
             text-align: center;
             color: #ffffff;
-            background: linear-gradient(to bottom, rgba(2, 1, 5, 0.98) 0%, rgba(2, 1, 5, 0.6) 100%);
-            padding: 25px 20px;
-            border-radius: 24px;
+            background: linear-gradient(to bottom, rgba(15, 10, 25, 0.92) 0%, rgba(5, 5, 10, 0.8) 100%);
+            padding: 14px;
+            border-radius: 18px;
             transform: translateY(-20px);
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         #ui-layer.active .content-card {
@@ -79,77 +81,75 @@
 
         .rarity-tag {
             display: inline-block;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
+            font-size: 0.45rem;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
-            padding: 6px 14px;
+            padding: 2px 8px;
             border-radius: 20px;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             background: rgba(255,255,255,0.08);
             color: #ffd700;
+            font-weight: 500;
         }
 
         .rarity-tag.special {
             background: rgba(0, 242, 255, 0.15);
             color: #00f2ff;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
             border: 1px solid rgba(0, 242, 255, 0.3);
             font-weight: bold;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            font-size: clamp(0.95rem, 3.2vw, 1.3rem);
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             line-height: 1.2;
-            text-shadow: 0 0 25px rgba(0, 242, 255, 0.3);
+            color: #ffffff;
         }
 
         p {
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            line-height: 1.6;
-            font-weight: 400;
-            opacity: 0.9;
-            margin-bottom: 25px;
+            font-size: clamp(0.7rem, 2.4vw, 0.85rem);
+            line-height: 1.4;
+            opacity: 0.85;
+            margin-bottom: 10px;
             font-style: italic;
             font-family: 'Playfair Display', serif;
-            color: #e0faff;
+            color: #d1f7ff;
         }
 
         .btn-back {
             appearance: none;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            padding: 14px 32px;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            pointer-events: auto;
         }
 
-        .btn-back:hover, .btn-back:active {
-            background: rgba(0, 242, 255, 0.2);
-            border-color: #00f2ff;
-            transform: scale(1.05);
+        .btn-back:active {
+            background: rgba(0, 242, 255, 0.25);
+            transform: scale(0.95);
+            border-color: rgba(0, 242, 255, 0.4);
         }
 
         .touch-hint {
-            font-size: 0.7rem;
+            font-size: 0.5rem;
             color: #00f2ff;
-            margin-top: 15px;
-            opacity: 0.8;
-            letter-spacing: 1px;
-            animation: pulse 2s infinite ease-in-out;
+            margin-top: 6px;
+            opacity: 0.7;
+            animation: pulse 2.5s infinite ease-in-out;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.98); }
-            50% { opacity: 1; text-shadow: 0 0 10px #00f2ff; transform: scale(1); }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; text-shadow: 0 0 5px #00f2ff; }
         }
     </style>
 </head>
@@ -168,7 +168,6 @@
     </div>
 
     <script>
-        /** * DADOS DA FLORA CÓSMICA */
         const flowerData = [
             { id: 'rosa', nome: 'Rosa de Plasma', colors: ['#ff1a4a', '#800020', '#ffccd5'], aura: 'rgba(255, 26, 74, ', mensagem: "Uma nebulosa em forma de pétalas que queima com o calor de mil sóis." },
             { id: 'girassol', nome: 'Pulsar Dourado', colors: ['#ffaa00', '#4d3300', '#fff9e6'], aura: 'rgba(255, 170, 0, ', mensagem: "As sementes deste girassol são anãs brancas colidindo em harmonia." },
@@ -183,19 +182,17 @@
             nome: 'A Rosa do Impossível',
             colors: ['#00f2ff', '#003366', '#ffffff'],
             aura: 'rgba(0, 242, 255, ',
-            mensagem: "A rosa azul simboliza o impossível, o inalcançável, mas por você eu farei o impossível infinitas vezes. Vou te amar até que essa flor não tenha mais pétalas.",
+            mensagem: "A rosa azul simboliza o impossível. Por você eu farei o impossível infinitas vezes.",
             rarity: 'SINGULARIDADE'
         };
 
-        /** * SETUP E RESPONSIVIDADE */
         const canvas = document.getElementById('universe');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false }); 
         let width, height, cx, cy;
         let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Ajuste de escala baseado no dispositivo
-        let CHUNK_SIZE = isMobile ? 1200 : 2500; 
-        let PLANET_SCALE = isMobile ? 1.5 : 1.0; 
+        let CHUNK_SIZE = 1200; 
+        let PLANET_SCALE = 0.7; // Reduzido ligeiramente para evitar cortes
 
         let cam = { x: 0, y: 0, zoom: 1, targetX: 0, targetY: 0, targetZoom: 1 };
         let vel = { x: 0, y: 0 };
@@ -207,15 +204,14 @@
         function resize() {
             width = window.innerWidth;
             height = window.innerHeight;
-            canvas.width = width * (window.devicePixelRatio || 1);
-            canvas.height = height * (window.devicePixelRatio || 1);
-            ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+            const dpr = Math.min(window.devicePixelRatio || 1, 2); 
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.scale(dpr, dpr);
             cx = width / 2; cy = height / 2;
-            
-            // Re-detectar se é mobile na mudança de orientação
             isMobile = width < 768;
-            CHUNK_SIZE = isMobile ? 1200 : 2500;
-            PLANET_SCALE = isMobile ? 1.5 : 1.0;
+            CHUNK_SIZE = isMobile ? 1000 : 1800;
+            PLANET_SCALE = isMobile ? 0.8 : 0.7; 
         }
         window.addEventListener('resize', resize);
         resize();
@@ -239,29 +235,25 @@
             let chunkStars = [];
             let chunkPlanets = [];
             const random = createPRNG(cx_idx, cy_idx);
-
-            // Menos estrelas no mobile para performance
-            let starCount = isMobile ? 60 : 150;
+            let starCount = isMobile ? 30 : 80;
             for(let i=0; i<starCount; i++) {
                 chunkStars.push({
                     x: cx_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
                     y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
                     z: random() * 0.8 + 0.2,
-                    size: random() * 1.5 + 0.5,
+                    size: random() * 1.0 + 0.4,
                     phase: random() * Math.PI * 2
                 });
             }
 
-            // Alta taxa de aparição
             if(random() < 0.85) {
-                const isSpecial = random() < 0.15; // 15% de chance da Rosa Azul no mobile/ajustado
-                
+                const isSpecial = random() < 0.12;
                 if(isSpecial) {
                     chunkPlanets.push({
                         ...BLUE_ROSE_DATA,
-                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.2 + random() * (CHUNK_SIZE * 0.6),
-                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.2 + random() * (CHUNK_SIZE * 0.6),
-                        radius: (80 + random() * 20) * PLANET_SCALE,
+                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5,
+                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5,
+                        radius: (50 + random() * 15) * PLANET_SCALE,
                         seed: random() * 1000,
                         rotSpeed: 0.002,
                         quantity: 1,
@@ -269,71 +261,50 @@
                     });
                 } else {
                     let typeIdx = Math.floor(random() * flowerData.length);
-                    let rVal = random();
-                    let quantity = 1;
-                    let rarity = "COMUM";
-                    if(rVal > 0.95) { quantity = 3; rarity = "TRIO RARO"; }
-                    else if(rVal > 0.80) { quantity = 2; rarity = "DUETO INCOMUM"; }
-
                     chunkPlanets.push({
                         ...flowerData[typeIdx],
-                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.15 + random() * (CHUNK_SIZE * 0.7),
-                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.15 + random() * (CHUNK_SIZE * 0.7),
-                        radius: (60 + random() * 30) * PLANET_SCALE,
+                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.3 + random() * (CHUNK_SIZE * 0.4),
+                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.3 + random() * (CHUNK_SIZE * 0.4),
+                        radius: (40 + random() * 18) * PLANET_SCALE,
                         seed: random() * 1000,
                         rotSpeed: (random() - 0.5) * 0.004,
-                        quantity,
-                        rarity
+                        quantity: random() > 0.85 ? 2 : 1,
+                        rarity: random() > 0.85 ? "INCOMUM" : "COMUM"
                     });
                 }
             }
             return { stars: chunkStars, planets: chunkPlanets };
         }
 
-        /** * ARTES BOTÂNICAS */
         function drawDome(ctx, size, bloom) {
             ctx.save();
             ctx.beginPath();
-            ctx.arc(0, -size * 0.4, size * 2.3, Math.PI, 0);
+            ctx.arc(0, -size * 0.4, size * 2.1, Math.PI, 0); 
             let grad = ctx.createLinearGradient(-size, -size * 2, size, 0);
-            grad.addColorStop(0, 'rgba(255, 255, 255, ' + (0.5 * bloom) + ')');
-            grad.addColorStop(0.5, 'rgba(255, 255, 255, 0)');
-            grad.addColorStop(1, 'rgba(0, 242, 255, ' + (0.2 * bloom) + ')');
+            grad.addColorStop(0, 'rgba(255, 255, 255, ' + (0.35 * bloom) + ')');
+            grad.addColorStop(1, 'rgba(0, 242, 255, ' + (0.1 * bloom) + ')');
             ctx.strokeStyle = grad;
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 1.0;
             ctx.stroke();
-            let domeG = ctx.createRadialGradient(0, -size, 0, 0, -size, size * 2.3);
-            domeG.addColorStop(0, 'rgba(255, 255, 255, 0)');
-            domeG.addColorStop(0.9, 'rgba(0, 242, 255, ' + (0.1 * bloom) + ')');
-            domeG.addColorStop(1, 'rgba(0, 242, 255, ' + (0.2 * bloom) + ')');
-            ctx.fillStyle = domeG;
-            ctx.fill();
             ctx.restore();
         }
 
         function drawBlueRose(ctx, r, colors, bloom, time) {
-            const glowPulse = Math.sin(time * 0.002) * 10;
-            ctx.shadowBlur = (20 + glowPulse) * bloom;
+            const glowPulse = Math.sin(time * 0.002) * 4;
+            ctx.shadowBlur = (10 + glowPulse) * bloom;
             ctx.shadowColor = colors[0];
-            for(let layer=0; layer<5; layer++) {
-                let petalCount = 7 + layer * 2;
-                let layerR = r * (1.2 - layer * 0.2);
+            for(let layer=0; layer<4; layer++) {
+                let petalCount = 6 + layer * 2;
+                let layerR = r * (1.0 - layer * 0.25);
                 for(let i=0; i<petalCount; i++) {
                     ctx.save();
                     ctx.rotate((i * (Math.PI*2/petalCount)) + layer * 0.4 + time * 0.0005);
-                    ctx.beginPath();
-                    ctx.moveTo(0,0);
+                    ctx.beginPath(); ctx.moveTo(0,0);
                     ctx.bezierCurveTo(layerR * 0.8, -layerR*0.6, layerR*1.8, layerR*1.2, 0, layerR * 1.5);
                     ctx.bezierCurveTo(-layerR*1.8, layerR*1.2, -layerR*0.8, -layerR*0.6, 0, 0);
                     let g = ctx.createRadialGradient(0,0,0,0,0,layerR * 1.5);
-                    g.addColorStop(0, colors[2]); 
-                    g.addColorStop(0.4, colors[0]); 
-                    g.addColorStop(1, colors[1]);
-                    ctx.fillStyle = g; 
-                    ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, ' + (0.2 * bloom) + ')';
-                    ctx.lineWidth = 0.8;
-                    ctx.stroke();
+                    g.addColorStop(0, colors[2]); g.addColorStop(0.5, colors[0]); g.addColorStop(1, colors[1]);
+                    ctx.fillStyle = g; ctx.fill();
                     ctx.restore();
                 }
             }
@@ -349,73 +320,65 @@
             else if(p.id === 'orquidea') drawOrchid(ctx, size, p.colors);
         }
 
-        // Funções auxiliares de desenho (Simplificadas para mobile)
-        function drawRose(ctx, r, colors) { for(let l=0;l<3;l++){let pc=5+l*2;let lr=r*(1-l*0.25);for(let i=0;i<pc;i++){ctx.save();ctx.rotate((i*(Math.PI*2/pc))+l);ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(lr,-lr*0.5,lr*1.5,lr*0.8,0,lr);ctx.bezierCurveTo(-lr*1.5,lr*0.8,-lr,-lr*0.5,0,0);let g=ctx.createRadialGradient(0,0,0,0,0,lr);g.addColorStop(0,colors[2]);g.addColorStop(0.5,colors[0]);g.addColorStop(1,colors[1]);ctx.fillStyle=g;ctx.fill();ctx.restore();}} }
-        function drawTulip(ctx, r, colors) { r*=1.1; for(let d of [-1,1]){ ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(d*r*0.9, -r*0.3, d*r, r*1.3, 0, r*1.6); ctx.bezierCurveTo(-d*r*0.3, r*0.9, 0, r*0.3, 0, 0); let g = ctx.createLinearGradient(0,0,d*r,r); g.addColorStop(0, colors[0]); g.addColorStop(1, colors[1]); ctx.fillStyle = g; ctx.fill(); } ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(r*0.5, r*0.8, 0, r*1.7); ctx.quadraticCurveTo(-r*0.5, r*0.8, 0, 0); ctx.fillStyle = colors[2]; ctx.fill(); }
-        function drawSunflower(ctx, r, colors) { for(let i=0; i<16; i++) { ctx.save(); ctx.rotate(i * Math.PI/8); ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(r*0.4, r*0.5, 0, r * (i%2==0?1.2:1.0)); ctx.quadraticCurveTo(-r*0.4, r*0.5, 0, 0); ctx.fillStyle = i%2==0 ? colors[0] : colors[2]; ctx.fill(); ctx.restore(); } ctx.beginPath(); ctx.arc(0,0,r*0.4,0,Math.PI*2); ctx.fillStyle = colors[1]; ctx.fill(); }
-        function drawLavender(ctx, r, colors) { for(let i=0; i<12; i++) { let y = -i * (r*0.18); let scale = (1 - (i/15)); ctx.save(); ctx.translate(0, y); for(let side of [-1, 1]) { ctx.beginPath(); ctx.ellipse(side * r*0.12, 0, r*0.22 * scale, r*0.12 * scale, side * 0.5, 0, Math.PI*2); ctx.fillStyle = colors[0]; ctx.fill(); } ctx.restore(); } }
-        function drawLily(ctx, r, colors) { for(let i=0; i<6; i++) { ctx.save(); ctx.rotate(i * Math.PI/3); ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(r*0.4, r*0.2, r*0.3, r*1.5, 0, r*1.8); ctx.bezierCurveTo(-r*0.3, r*1.5, -r*0.4, r*0.2, 0, 0); let g = ctx.createLinearGradient(0, 0, 0, r*1.8); g.addColorStop(0, colors[1]); g.addColorStop(1, colors[0]); ctx.fillStyle = g; ctx.fill(); ctx.restore(); } }
-        function drawOrchid(ctx, r, colors) { for(let i=0; i<3; i++) { ctx.save(); ctx.rotate(i * (Math.PI*2/3)); ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(r*0.8, r*0.1, r*0.5, r*1.4); ctx.quadraticCurveTo(-r*0.8, r*0.1, 0, 0); ctx.fillStyle = colors[1]; ctx.fill(); ctx.restore(); } ctx.beginPath(); ctx.arc(0, 0, r*0.2, 0, Math.PI*2); ctx.fillStyle = colors[2]; ctx.fill(); }
+        function drawRose(ctx, r, colors) { for(let l=0;l<3;l++){let pc=5;let lr=r*(0.9-l*0.3);for(let i=0;i<pc;i++){ctx.save();ctx.rotate((i*(Math.PI*2/pc))+l);ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(lr,-lr*0.5,lr*1.4,lr*0.8,0,lr);ctx.bezierCurveTo(-lr*1.4,lr*0.8,-lr,-lr*0.5,0,0);let g=ctx.createRadialGradient(0,0,0,0,0,lr);g.addColorStop(0,colors[2]);g.addColorStop(1,colors[0]);ctx.fillStyle=g;ctx.fill();ctx.restore();}} }
+        function drawTulip(ctx, r, colors) { for(let d of [-1,1]){ ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(d*r*0.9, -r*0.3, d*r, r*1.3, 0, r*1.6); ctx.fillStyle = colors[0]; ctx.fill(); } }
+        function drawSunflower(ctx, r, colors) { for(let i=0; i<12; i++) { ctx.save(); ctx.rotate(i * Math.PI/6); ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(r*0.4, r*0.5, 0, r*1.1); ctx.fillStyle = colors[0]; ctx.fill(); ctx.restore(); } ctx.beginPath(); ctx.arc(0,0,r*0.35,0,Math.PI*2); ctx.fillStyle = colors[1]; ctx.fill(); }
+        function drawLavender(ctx, r, colors) { for(let i=0; i<8; i++) { let y = -i * (r*0.18); ctx.save(); ctx.translate(0, y); for(let s of [-1, 1]) { ctx.beginPath(); ctx.ellipse(s*r*0.1, 0, r*0.18, r*0.08, s*0.5, 0, Math.PI*2); ctx.fillStyle = colors[0]; ctx.fill(); } ctx.restore(); } }
+        function drawLily(ctx, r, colors) { for(let i=0; i<5; i++) { ctx.save(); ctx.rotate(i * Math.PI*2/5); ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(r*0.4, r*0.2, r*0.3, r*1.5, 0, r*1.7); ctx.fillStyle = colors[0]; ctx.fill(); ctx.restore(); } }
+        function drawOrchid(ctx, r, colors) { for(let i=0; i<3; i++) { ctx.save(); ctx.rotate(i * (Math.PI*2/3)); ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(r*0.7, r*0.1, r*0.4, r*1.2); ctx.fillStyle = colors[1]; ctx.fill(); ctx.restore(); } }
 
         function drawStem(ctx, x, y, size, bloom, time, angleOffset = 0) {
-            const len = size * 2.2 * bloom;
-            const sway = Math.sin(time * 0.001 + angleOffset) * 10 * bloom;
-            const targetX = x + (angleOffset * size * 1.5) * bloom + sway;
+            const len = size * 2.0 * bloom;
+            const sway = Math.sin(time * 0.001 + angleOffset) * 5 * bloom;
+            const targetX = x + (angleOffset * size * 1.1) * bloom + sway;
             const targetY = y - len;
             ctx.beginPath();
-            ctx.moveTo(x, y + size * 0.2); 
+            ctx.moveTo(x, y + size * 0.1); 
             ctx.bezierCurveTo(x, y, targetX - sway * 0.5, targetY + len * 0.4, targetX, targetY);
-            ctx.strokeStyle = '#2d5a27';
-            ctx.lineWidth = Math.max(2, size * 0.1 * bloom);
-            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#142912';
+            ctx.lineWidth = Math.max(1.0, size * 0.06 * bloom);
             ctx.stroke();
-            return { topX: targetX, topY: targetY, rotation: (angleOffset * 0.4) + (sway * 0.02) };
+            return { topX: targetX, topY: targetY, rotation: (angleOffset * 0.25) + (sway * 0.02) };
         }
 
-        /** * RENDER PLANETA */
         function drawPlanet(ctx, p, time, cam) {
             let px = cx + (p.x - cam.x) * cam.zoom;
             let py = cy + (p.y - cam.y) * cam.zoom;
             let pr = Math.max(0, p.radius * cam.zoom);
 
-            if (px < -pr*4 || px > width+pr*4 || py < -pr*4 || py > height+pr*4) return;
+            if (px < -pr*3 || px > width+pr*3 || py < -pr*3 || py > height+pr*3) return;
 
             let isActive = (activePlanet === p);
             let pAlpha = isActive ? Math.max(0, 1 - bloomProgress * 2.5) : 1;
 
-            if (pAlpha > 0.001) {
+            if (pAlpha > 0.01) {
                 ctx.save();
                 ctx.translate(px, py);
-                let atmRadiusOuter = pr * (p.isSpecial ? 1.8 : 1.4);
-                let atm = ctx.createRadialGradient(0, 0, pr * 0.5, 0, 0, atmRadiusOuter);
-                atm.addColorStop(0, p.aura + (0.5 * pAlpha) + ')');
+                let atm = ctx.createRadialGradient(0, 0, pr * 0.6, 0, 0, pr * 1.4);
+                atm.addColorStop(0, p.aura + (0.35 * pAlpha) + ')');
                 atm.addColorStop(1, p.aura + '0)');
                 ctx.fillStyle = atm;
-                ctx.beginPath(); ctx.arc(0, 0, atmRadiusOuter, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(0, 0, pr * 1.4, 0, Math.PI * 2); ctx.fill();
                 
                 ctx.rotate(time * p.rotSpeed);
                 let core = ctx.createRadialGradient(-pr*0.3, -pr*0.3, 0, 0, 0, pr);
-                if(p.isSpecial) {
-                    core.addColorStop(0, '#ffffff'); core.addColorStop(0.2, '#00f2ff'); core.addColorStop(1, '#000b1a');
-                } else {
-                    core.addColorStop(0, '#ffffff'); core.addColorStop(0.3, p.colors[0]); core.addColorStop(1, '#000000');
-                }
+                core.addColorStop(0, '#ffffff'); core.addColorStop(0.3, p.colors[0]); core.addColorStop(1, '#000000');
                 ctx.fillStyle = core;
                 ctx.beginPath(); ctx.arc(0, 0, pr, 0, Math.PI * 2); ctx.fill();
                 ctx.restore();
             }
 
-            if (isActive && bloomProgress > 0.001) {
+            if (isActive && bloomProgress > 0.01) {
                 ctx.save();
                 ctx.translate(px, py);
-                let baseSize = pr * 0.85;
+                let baseSize = pr * 0.7; 
                 if(p.isSpecial) drawDome(ctx, pr, bloomProgress);
                 for(let q=0; q < p.quantity; q++) {
                     ctx.save();
-                    let angleOffset = (p.quantity > 1) ? (q - (p.quantity - 1) / 2) * 0.8 : 0;
+                    let angleOffset = (p.quantity > 1) ? (q - (p.quantity - 1) / 2) * 0.6 : 0;
                     const { topX, topY, rotation } = drawStem(ctx, 0, 0, baseSize, bloomProgress, time, angleOffset);
                     ctx.translate(topX, topY);
-                    ctx.scale(Math.max(0.001, bloomProgress), Math.max(0.001, bloomProgress));
+                    ctx.scale(bloomProgress, bloomProgress);
                     ctx.rotate(rotation);
                     if(p.isSpecial) drawBlueRose(ctx, baseSize, p.colors, bloomProgress, time);
                     else drawFlowerByType(ctx, p, baseSize);
@@ -425,41 +388,40 @@
             }
         }
 
-        /** * LOOP */
         function loop(time) {
             ctx.fillStyle = '#020105';
             ctx.fillRect(0, 0, width, height);
 
             if (state === 'ZOOMING') {
-                cam.x += (cam.targetX - cam.x) * 0.1;
-                cam.y += (cam.targetY - cam.y) * 0.1;
-                cam.zoom += (cam.targetZoom - cam.zoom) * 0.1;
-                bloomProgress += (1 - bloomProgress) * 0.05;
+                cam.x += (cam.targetX - cam.x) * 0.08;
+                cam.y += (cam.targetY - cam.y) * 0.08;
+                cam.zoom += (cam.targetZoom - cam.zoom) * 0.08;
+                bloomProgress += (1 - bloomProgress) * 0.06;
             } else if (state === 'RETURNING') {
-                cam.zoom += (1 - cam.zoom) * 0.1;
-                bloomProgress += (0 - bloomProgress) * 0.1;
-                if(bloomProgress < 0.01) { state = 'EXPLORING'; activePlanet = null; fallingPetals = []; }
+                cam.zoom += (1 - cam.zoom) * 0.12;
+                bloomProgress += (0 - bloomProgress) * 0.12;
+                if(bloomProgress < 0.01) { state = 'EXPLORING'; activePlanet = null; }
             } else {
                 cam.x += vel.x; cam.y += vel.y;
                 vel.x *= 0.95; vel.y *= 0.95;
             }
 
-            let startX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
-            let endX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
-            let startY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
-            let endY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
+            let sX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
+            let eX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
+            let sY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
+            let eY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
 
-            for(let x=startX; x<=endX; x++) {
-                for(let y=startY; y<=endY; y++) {
+            for(let x=sX; x<=eX; x++) {
+                for(let y=sY; y<=eY; y++) {
                     let chunkKey = `${x},${y}`;
                     let chunk = chunks.get(chunkKey);
                     if(!chunk) { chunk = generateChunk(x,y); chunks.set(chunkKey, chunk); }
                     
+                    ctx.fillStyle = '#ffffff';
                     chunk.stars.forEach(s => {
                         let sx = cx + (s.x - cam.x) * s.z * cam.zoom;
                         let sy = cy + (s.y - cam.y) * s.z * cam.zoom;
-                        ctx.fillStyle = '#ffffff'; 
-                        ctx.globalAlpha = 0.1 + Math.sin(time*0.001+s.phase)*0.3;
+                        ctx.globalAlpha = 0.1 + Math.sin(time*0.001+s.phase)*0.2;
                         ctx.beginPath(); ctx.arc(sx, sy, s.size * cam.zoom, 0, Math.PI*2); ctx.fill();
                     });
                     ctx.globalAlpha = 1;
@@ -469,55 +431,43 @@
 
             fallingPetals = fallingPetals.filter(p => p.life > 0);
             fallingPetals.forEach(p => {
-                p.y += p.vy; p.x += Math.sin(time*0.008 + p.offset) * 2;
-                p.life -= 0.005; p.rot += 0.04;
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rot);
-                ctx.globalAlpha = p.life;
-                ctx.shadowBlur = 8 * p.life;
-                ctx.shadowColor = '#00f2ff';
-                ctx.fillStyle = '#00f2ff';
-                ctx.beginPath();
-                ctx.moveTo(0,0);
-                ctx.bezierCurveTo(8*cam.zoom, -4*cam.zoom, 10*cam.zoom, 8*cam.zoom, 0, 10*cam.zoom);
-                ctx.fill();
-                ctx.restore();
+                p.y += p.vy; p.x += Math.sin(time*0.008 + p.offset) * 1.5;
+                p.life -= 0.008; p.rot += 0.04;
+                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                ctx.globalAlpha = p.life; ctx.fillStyle = '#00f2ff';
+                ctx.beginPath(); ctx.moveTo(0,0);
+                ctx.bezierCurveTo(5*cam.zoom, -2*cam.zoom, 7*cam.zoom, 5*cam.zoom, 0, 7*cam.zoom);
+                ctx.fill(); ctx.restore();
             });
             ctx.globalAlpha = 1;
-
             requestAnimationFrame(loop);
         }
 
-        /** * INPUTS MELHORADOS PARA TOUCH */
-        let isDown = false, lastPos = {x:0,y:0};
+        let isDown = false, lastPos = {x:0,y:0}, startPos = {x:0,y:0};
         
         function handleStart(ex, ey) {
             if(state === 'ZOOMING' && activePlanet && activePlanet.isSpecial) {
-                for(let i=0; i<2; i++) {
-                    fallingPetals.push({
-                        x: ex + (Math.random()-0.5)*30, y: ey + (Math.random()-0.5)*30,
-                        vy: 0.8 + Math.random(), rot: Math.random()*Math.PI, 
-                        life: 1.0, offset: Math.random()*1000
-                    });
-                }
+                fallingPetals.push({
+                    x: ex, y: ey, vy: 1 + Math.random(), rot: Math.random(), 
+                    life: 1.0, offset: Math.random()*100
+                });
                 return;
             }
             if(state !== 'EXPLORING') return;
-            isDown = true; lastPos = {x:ex, y:ey}; vel = {x:0, y:0};
+            isDown = true; lastPos = {x:ex, y:ey}; startPos = {x:ex, y:ey}; vel = {x:0, y:0};
         }
 
         function handleMove(ex, ey) {
             if(!isDown) return;
             let dx = ex - lastPos.x, dy = ey - lastPos.y;
             cam.x -= dx/cam.zoom; cam.y -= dy/cam.zoom;
-            vel = {x: -dx*0.15, y: -dy*0.15};
+            vel = {x: -dx*0.12, y: -dy*0.12};
             lastPos = {x:ex, y:ey};
         }
 
         function handleEnd(ex, ey) {
             if(!isDown) return; isDown = false;
-            checkClick(ex, ey);
+            if(Math.hypot(ex - startPos.x, ey - startPos.y) < 10) checkClick(ex, ey);
         }
 
         window.addEventListener('pointerdown', e => handleStart(e.clientX, e.clientY));
@@ -525,31 +475,35 @@
         window.addEventListener('pointerup', e => handleEnd(e.clientX, e.clientY));
 
         function checkClick(mx, my) {
-            let startX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
-            let endX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
-            let startY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
-            let endY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
+            let sX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
+            let eX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
+            let sY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
+            let eY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
 
-            for(let x=startX; x<=endX; x++) {
-                for(let y=startY; y<=endY; y++) {
+            for(let x=sX; x<=eX; x++) {
+                for(let y=sY; y<=eY; y++) {
                     let chunk = chunks.get(`${x},${y}`);
                     if(!chunk) continue;
                     for(let p of chunk.planets) {
                         let px = cx + (p.x - cam.x) * cam.zoom;
                         let py = cy + (p.y - cam.y) * cam.zoom;
-                        // Área de toque maior no mobile (2.2x o raio)
-                        let hitBox = p.radius * cam.zoom * (isMobile ? 2.2 : 1.6);
-                        if(Math.hypot(mx-px, my-py) < hitBox) {
-                            activePlanet = p; 
-                            state = 'ZOOMING';
+                        let hit = p.radius * cam.zoom * (isMobile ? 2.2 : 1.4);
+                        if(Math.hypot(mx-px, my-py) < hit) {
+                            activePlanet = p; state = 'ZOOMING';
                             cam.targetX = p.x; 
-                            cam.targetY = p.y - (isMobile ? 80 : 120);
-                            cam.targetZoom = (height * (isMobile ? 0.35 : 0.23)) / p.radius;
                             
-                            const rarityEl = document.getElementById('rarity-label');
-                            rarityEl.innerText = p.rarity || 'COMUM';
-                            rarityEl.className = 'rarity-tag' + (p.isSpecial ? ' special' : '');
+                            // SUBINDO AS FLORES: 
+                            // Reduzi o offset negativo para que a câmera aponte um pouco mais para baixo,
+                            // o que faz com que a flor suba visualmente no frame.
+                            // Antes era height * 0.15, agora reduzi para 0.05 para centrar melhor no frame útil.
+                            cam.targetY = p.y - (height * 0.05 / cam.zoom);
                             
+                            // Zoom levemente mais afastado para não cortar as pétalas inferiores
+                            cam.targetZoom = (height * (isMobile ? 0.28 : 0.24)) / p.radius;
+                            
+                            const rl = document.getElementById('rarity-label');
+                            rl.innerText = p.rarity || 'COMUM';
+                            rl.className = 'rarity-tag' + (p.isSpecial ? ' special' : '');
                             document.getElementById('flower-name').innerText = p.nome;
                             document.getElementById('flower-desc').innerText = p.mensagem;
                             document.getElementById('ui-layer').classList.add('active');
@@ -561,7 +515,8 @@
             }
         }
 
-        document.getElementById('btn-back').onclick = () => {
+        document.getElementById('btn-back').onclick = (e) => {
+            e.stopPropagation();
             state = 'RETURNING';
             document.getElementById('ui-layer').classList.remove('active');
         };
