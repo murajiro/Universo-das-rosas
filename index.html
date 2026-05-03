@@ -3,154 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Universo de Flores Infinito</title>
+    <title>Jardim das Galáxias</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;500&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body, html {
-            width: 100%;
-            height: 100%;
-            background-color: #020105;
-            overflow: hidden;
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body, html { 
+            width: 100%; height: 100%; 
+            background-color: #020105; 
+            overflow: hidden; 
             touch-action: none; 
-            overscroll-behavior: none;
-            font-family: 'Inter', sans-serif;
+            overscroll-behavior: none; 
+            font-family: 'Inter', sans-serif; 
         }
-
-        canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
+        canvas { display: block; width: 100vw; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }
+        
         #ui-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;
+            display: flex; flex-direction: column; 
+            justify-content: flex-end; 
             align-items: center;
-            padding: 15px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
+            padding: 20px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease;
         }
-
-        #ui-layer.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        #ui-layer.active { opacity: 1; pointer-events: auto; }
 
         .content-card {
-            max-width: 360px;
-            width: 90%;
-            text-align: center;
-            color: #ffffff;
-            background: linear-gradient(to bottom, rgba(15, 10, 25, 0.92) 0%, rgba(5, 5, 10, 0.8) 100%);
-            padding: 14px;
-            border-radius: 18px;
-            transform: translateY(-20px);
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 340px; width: 95%; text-align: center; color: #ffffff;
+            background: linear-gradient(135deg, rgba(15, 10, 25, 0.9) 0%, rgba(5, 5, 10, 0.8) 100%);
+            padding: 20px; border-radius: 24px; transform: translateY(20px);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
-
-        #ui-layer.active .content-card {
-            transform: translateY(0);
-        }
+        #ui-layer.active .content-card { transform: translateY(0); }
 
         .rarity-tag {
-            display: inline-block;
-            font-size: 0.45rem;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin-bottom: 5px;
-            background: rgba(255,255,255,0.08);
-            color: #ffd700;
-            font-weight: 500;
+            display: inline-block; font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
+            background: rgba(255,255,255,0.08); color: #ffd700; font-weight: 700;
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
-
-        .rarity-tag.special {
-            background: rgba(0, 242, 255, 0.15);
-            color: #00f2ff;
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            font-weight: bold;
+        .rarity-tag.galactico { 
+            background: linear-gradient(90deg, #ff00cc, #3333ff, #00f2ff); 
+            color: #fff; box-shadow: 0 0 15px rgba(255, 0, 204, 0.5); border: none;
+            animation: glow-move 3s infinite alternate;
         }
+        @keyframes glow-move { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(30deg); } }
+        
+        .rarity-tag.special { background: rgba(0, 242, 255, 0.15); color: #00f2ff; border: 1px solid rgba(0, 242, 255, 0.4); }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(0.95rem, 3.2vw, 1.3rem);
-            font-weight: 700;
-            margin-bottom: 4px;
-            line-height: 1.2;
-            color: #ffffff;
-        }
-
-        p {
-            font-size: clamp(0.7rem, 2.4vw, 0.85rem);
-            line-height: 1.4;
-            opacity: 0.85;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-family: 'Playfair Display', serif;
-            color: #d1f7ff;
-        }
-
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; color: #fff; }
+        p { font-family: 'Playfair Display', serif; font-size: 0.85rem; line-height: 1.5; opacity: 0.85; margin-bottom: 15px; color: #e0faff; font-style: italic; }
+        
         .btn-back {
-            appearance: none;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: #fff; padding: 10px 24px; border-radius: 30px; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: 0.3s;
         }
-
-        .btn-back:active {
-            background: rgba(0, 242, 255, 0.25);
-            transform: scale(0.95);
-            border-color: rgba(0, 242, 255, 0.4);
-        }
-
-        .touch-hint {
-            font-size: 0.5rem;
-            color: #00f2ff;
-            margin-top: 6px;
-            opacity: 0.7;
-            animation: pulse 2.5s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.9; text-shadow: 0 0 5px #00f2ff; }
-        }
+        .btn-back:active { background: rgba(255, 255, 255, 0.25); transform: scale(0.95); }
     </style>
 </head>
 <body>
@@ -163,64 +78,50 @@
             <h1 id="flower-name">Nome da Flor</h1>
             <p id="flower-desc">Descrição.</p>
             <button class="btn-back" id="btn-back">Explorar Mais</button>
-            <div id="interaction-hint" class="touch-hint" style="display:none;">✧ Toque na rosa para soltar uma pétala ✧</div>
         </div>
     </div>
 
     <script>
         const flowerData = [
-            { id: 'rosa', nome: 'Rosa de Plasma', colors: ['#ff1a4a', '#800020', '#ffccd5'], aura: 'rgba(255, 26, 74, ', mensagem: "Uma nebulosa em forma de pétalas que queima com o calor de mil sóis." },
-            { id: 'girassol', nome: 'Pulsar Dourado', colors: ['#ffaa00', '#4d3300', '#fff9e6'], aura: 'rgba(255, 170, 0, ', mensagem: "As sementes deste girassol são anãs brancas colidindo em harmonia." },
-            { id: 'lavanda', nome: 'Eter de Lavanda', colors: ['#9d4dff', '#330066', '#e6d4ff'], aura: 'rgba(157, 77, 255, ', mensagem: "Ondas gravitacionais que exalam o perfume do infinito." },
-            { id: 'tulipa', nome: 'Cálice de Quasar', colors: ['#00e6e6', '#004d4d', '#e6ffff'], aura: 'rgba(0, 230, 230, ', mensagem: "Uma flor que dobra o tempo e o espaço dentro de seu brilho ciano." },
-            { id: 'lirio', nome: 'Lírio de Antimatéria', colors: ['#ffffff', '#2a0052', '#a000ff'], aura: 'rgba(160, 0, 255, ', mensagem: "Suas pétalas puras desafiam a lógica da matéria convencional." },
-            { id: 'orquidea', nome: 'Orquídea de Eventos', colors: ['#000000', '#001a33', '#00ffff'], aura: 'rgba(0, 255, 255, ', mensagem: "Nascida no horizonte de eventos, onde o tempo para e a beleza é eterna." }
+            { id: 'rosa', nome: 'Rosa de Plasma', colors: ['#ff1a4a', '#4a0010', '#ffccd5'], aura: 'rgba(255, 26, 74, ', mensagem: "Uma nebulosa em forma de pétalas que queima com o calor de mil sóis." },
+            { id: 'girassol', nome: 'Pulsar Dourado', colors: ['#ffcc00', '#4d3300', '#fff9e6'], aura: 'rgba(255, 204, 0, ', mensagem: "As sementes deste girassol são anãs brancas colidindo em harmonia." },
+            { id: 'tulipa', nome: 'Cálice de Quasar', colors: ['#00f2ff', '#004d4d', '#e6ffff'], aura: 'rgba(0, 242, 255, ', mensagem: "Uma flor que dobra o tempo e o espaço dentro de seu brilho ciano." },
+            { id: 'lirio', nome: 'Lírio de Antimatéria', colors: ['#ffffff', '#2a0052', '#d4a0ff'], aura: 'rgba(212, 160, 255, ', mensagem: "Suas pétalas puras desafiam a lógica da matéria convencional." },
+            { id: 'margarida', nome: 'Margarida de Nêutrons', colors: ['#f0f0f0', '#ffeb3b', '#ffffff'], aura: 'rgba(255, 255, 255, ', mensagem: "Densidade infinita em pétalas brancas, orbitando um núcleo de energia pura." },
+            { id: 'dalia', nome: 'Dália de Singularidade', colors: ['#e91e63', '#311b92', '#ff80ab'], aura: 'rgba(233, 30, 99, ', mensagem: "Cada camada de pétalas representa uma dimensão oculta do multiverso." },
+            { id: 'lotus', nome: 'Lótus do Vácuo', colors: ['#2a2a2a', '#6a1b9a', '#e1bee7'], aura: 'rgba(106, 27, 154, ', mensagem: "Ela floresce onde não existe nada, alimentando-se do silêncio cósmico." }
         ];
 
         const BLUE_ROSE_DATA = {
-            id: 'blue-rose',
-            nome: 'A Rosa do Impossível',
-            colors: ['#00f2ff', '#003366', '#ffffff'],
-            aura: 'rgba(0, 242, 255, ',
-            mensagem: "A rosa azul simboliza o impossível. Por você eu farei o impossível infinitas vezes.",
+            id: 'blue-rose', nome: 'Rosa do Impossível', colors: ['#00f2ff', '#002244', '#ffffff'], aura: 'rgba(0, 242, 255, ',
+            mensagem: "A rosa azul simboliza o impossível. Por ti, farei o impossível infinitas vezes.",
             rarity: 'SINGULARIDADE'
         };
 
         const canvas = document.getElementById('universe');
-        const ctx = canvas.getContext('2d', { alpha: false }); 
+        const ctx = canvas.getContext('2d', { alpha: false });
         let width, height, cx, cy;
-        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        let CHUNK_SIZE = 1200; 
-        let PLANET_SCALE = 0.7; // Reduzido ligeiramente para evitar cortes
-
-        let cam = { x: 0, y: 0, zoom: 1, targetX: 0, targetY: 0, targetZoom: 1 };
+        let cam = { x: 0, y: 0, zoom: 0.8, targetX: 0, targetY: 0, targetZoom: 0.8 };
         let vel = { x: 0, y: 0 };
-        let state = 'EXPLORING'; 
+        let state = 'EXPLORING';
         let activePlanet = null;
-        let bloomProgress = 0; 
-        let fallingPetals = [];
+        let bloomProgress = 0;
+        const chunks = new Map();
+        const CHUNK_SIZE = 1400;
 
         function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            const dpr = Math.min(window.devicePixelRatio || 1, 2); 
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
+            width = window.innerWidth; height = window.innerHeight;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = width * dpr; canvas.height = height * dpr;
             ctx.scale(dpr, dpr);
             cx = width / 2; cy = height / 2;
-            isMobile = width < 768;
-            CHUNK_SIZE = isMobile ? 1000 : 1800;
-            PLANET_SCALE = isMobile ? 0.8 : 0.7; 
         }
         window.addEventListener('resize', resize);
         resize();
 
-        const chunks = new Map();
-
         function createPRNG(x, y) {
             let seed = (x * 374761393 + y * 668265263) >>> 0;
-            return function() {
+            return () => {
                 seed = (seed + 0x9E3779B9) | 0;
                 let t = seed ^ (seed >>> 16);
                 t = Math.imul(t, 0x21f0aaad);
@@ -232,293 +133,233 @@
         }
 
         function generateChunk(cx_idx, cy_idx) {
-            let chunkStars = [];
-            let chunkPlanets = [];
+            let stars = []; let planets = []; 
             const random = createPRNG(cx_idx, cy_idx);
-            let starCount = isMobile ? 30 : 80;
-            for(let i=0; i<starCount; i++) {
-                chunkStars.push({
-                    x: cx_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
-                    y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
-                    z: random() * 0.8 + 0.2,
-                    size: random() * 1.0 + 0.4,
-                    phase: random() * Math.PI * 2
+            
+            for(let i=0; i<60; i++) {
+                stars.push({ 
+                    x: cx_idx * CHUNK_SIZE + random() * CHUNK_SIZE, 
+                    y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE, 
+                    z: random() * 0.7 + 0.1, 
+                    size: random() * 1.2 + 0.2, 
+                    phase: random() * Math.PI * 2 
                 });
             }
 
-            if(random() < 0.85) {
-                const isSpecial = random() < 0.12;
-                if(isSpecial) {
-                    chunkPlanets.push({
-                        ...BLUE_ROSE_DATA,
-                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5,
-                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5,
-                        radius: (50 + random() * 15) * PLANET_SCALE,
-                        seed: random() * 1000,
-                        rotSpeed: 0.002,
-                        quantity: 1,
-                        isSpecial: true
-                    });
+            if(random() < 0.6) {
+                const isBlue = random() < 0.012;
+                if(isBlue) {
+                    planets.push({ ...BLUE_ROSE_DATA, x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5, y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5, radius: 45, seed: random() * 1000, rotSpeed: 0.001, quantity: 1, isSpecial: true, hasRing: true });
                 } else {
                     let typeIdx = Math.floor(random() * flowerData.length);
-                    chunkPlanets.push({
+                    let roll = random();
+                    let qty = 1, rarity = "COMUM";
+                    if(roll > 0.95) { qty = 5; rarity = "JARDIM GALÁCTICO"; }
+                    else if(roll > 0.82) { qty = 3; rarity = "LENDÁRIO"; }
+                    else if(roll > 0.60) { qty = 2; rarity = "INCOMUM"; }
+
+                    planets.push({
                         ...flowerData[typeIdx],
-                        x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.3 + random() * (CHUNK_SIZE * 0.4),
-                        y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.3 + random() * (CHUNK_SIZE * 0.4),
-                        radius: (40 + random() * 18) * PLANET_SCALE,
-                        seed: random() * 1000,
-                        rotSpeed: (random() - 0.5) * 0.004,
-                        quantity: random() > 0.85 ? 2 : 1,
-                        rarity: random() > 0.85 ? "INCOMUM" : "COMUM"
+                        x: cx_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
+                        y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
+                        radius: 35 + random() * 25, seed: random() * 1000,
+                        rotSpeed: (random()-0.5) * 0.003, quantity: qty, rarity: rarity,
+                        hasRing: random() > 0.85
                     });
                 }
             }
-            return { stars: chunkStars, planets: chunkPlanets };
+            return { stars, planets };
         }
 
-        function drawDome(ctx, size, bloom) {
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(0, -size * 0.4, size * 2.1, Math.PI, 0); 
-            let grad = ctx.createLinearGradient(-size, -size * 2, size, 0);
-            grad.addColorStop(0, 'rgba(255, 255, 255, ' + (0.35 * bloom) + ')');
-            grad.addColorStop(1, 'rgba(0, 242, 255, ' + (0.1 * bloom) + ')');
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.0;
-            ctx.stroke();
-            ctx.restore();
+        function drawPetal(ctx, r, color1, color2, color3, cp1, cp2) {
+            ctx.beginPath(); ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(r * cp1.x, -r * cp1.y, r * cp2.x, r * cp2.y, 0, r);
+            ctx.bezierCurveTo(-r * cp2.x, r * cp2.y, -r * cp1.x, -r * cp1.y, 0, 0);
+            let g = ctx.createRadialGradient(0, 0, 0, 0, r*0.5, r);
+            g.addColorStop(0, color3 || color2); g.addColorStop(0.5, color2); g.addColorStop(1, color1);
+            ctx.fillStyle = g; ctx.fill();
         }
 
-        function drawBlueRose(ctx, r, colors, bloom, time) {
-            const glowPulse = Math.sin(time * 0.002) * 4;
-            ctx.shadowBlur = (10 + glowPulse) * bloom;
-            ctx.shadowColor = colors[0];
-            for(let layer=0; layer<4; layer++) {
-                let petalCount = 6 + layer * 2;
-                let layerR = r * (1.0 - layer * 0.25);
-                for(let i=0; i<petalCount; i++) {
-                    ctx.save();
-                    ctx.rotate((i * (Math.PI*2/petalCount)) + layer * 0.4 + time * 0.0005);
-                    ctx.beginPath(); ctx.moveTo(0,0);
-                    ctx.bezierCurveTo(layerR * 0.8, -layerR*0.6, layerR*1.8, layerR*1.2, 0, layerR * 1.5);
-                    ctx.bezierCurveTo(-layerR*1.8, layerR*1.2, -layerR*0.8, -layerR*0.6, 0, 0);
-                    let g = ctx.createRadialGradient(0,0,0,0,0,layerR * 1.5);
-                    g.addColorStop(0, colors[2]); g.addColorStop(0.5, colors[0]); g.addColorStop(1, colors[1]);
-                    ctx.fillStyle = g; ctx.fill();
+        function drawRose(ctx, r, colors) {
+            for(let l=0; l<4; l++) {
+                let pc = 4 + l*2; let lr = r * (1 - l*0.2);
+                ctx.globalAlpha = 1 - l*0.15;
+                for(let i=0; i<pc; i++) {
+                    ctx.save(); ctx.rotate((i * Math.PI*2/pc) + l*0.7);
+                    drawPetal(ctx, lr, colors[0], colors[1], colors[2], {x: 1.3, y: 0.5}, {x: 1.5, y: 1.0});
                     ctx.restore();
                 }
             }
-            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1;
         }
 
-        function drawFlowerByType(ctx, p, size) {
-            if(p.id === 'rosa') drawRose(ctx, size, p.colors);
-            else if(p.id === 'tulipa') drawTulip(ctx, size, p.colors);
-            else if(p.id === 'girassol') drawSunflower(ctx, size, p.colors);
-            else if(p.id === 'lavanda') drawLavender(ctx, size, p.colors);
-            else if(p.id === 'lirio') drawLily(ctx, size, p.colors);
-            else if(p.id === 'orquidea') drawOrchid(ctx, size, p.colors);
+        function drawFlower(ctx, p, size, time) {
+            ctx.save();
+            if(p.id === 'blue-rose') {
+                ctx.shadowBlur = (10 + Math.sin(time*0.004)*5) * bloomProgress;
+                ctx.shadowColor = p.colors[0];
+                drawRose(ctx, size, p.colors);
+            }
+            else if(p.id === 'margarida') {
+                for(let i=0; i<16; i++) {
+                    ctx.save(); ctx.rotate(i * Math.PI/8);
+                    drawPetal(ctx, size, p.colors[0], "#ccc", "#fff", {x: 0.2, y: 0.1}, {x: 0.3, y: 1.1});
+                    ctx.restore();
+                }
+                ctx.beginPath(); ctx.arc(0,0,size*0.25,0,Math.PI*2); ctx.fillStyle = p.colors[1]; ctx.fill();
+            } else {
+                drawRose(ctx, size, p.colors);
+            }
+            ctx.restore();
         }
 
-        function drawRose(ctx, r, colors) { for(let l=0;l<3;l++){let pc=5;let lr=r*(0.9-l*0.3);for(let i=0;i<pc;i++){ctx.save();ctx.rotate((i*(Math.PI*2/pc))+l);ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(lr,-lr*0.5,lr*1.4,lr*0.8,0,lr);ctx.bezierCurveTo(-lr*1.4,lr*0.8,-lr,-lr*0.5,0,0);let g=ctx.createRadialGradient(0,0,0,0,0,lr);g.addColorStop(0,colors[2]);g.addColorStop(1,colors[0]);ctx.fillStyle=g;ctx.fill();ctx.restore();}} }
-        function drawTulip(ctx, r, colors) { for(let d of [-1,1]){ ctx.beginPath(); ctx.moveTo(0,0); ctx.bezierCurveTo(d*r*0.9, -r*0.3, d*r, r*1.3, 0, r*1.6); ctx.fillStyle = colors[0]; ctx.fill(); } }
-        function drawSunflower(ctx, r, colors) { for(let i=0; i<12; i++) { ctx.save(); ctx.rotate(i * Math.PI/6); ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(r*0.4, r*0.5, 0, r*1.1); ctx.fillStyle = colors[0]; ctx.fill(); ctx.restore(); } ctx.beginPath(); ctx.arc(0,0,r*0.35,0,Math.PI*2); ctx.fillStyle = colors[1]; ctx.fill(); }
-        function drawLavender(ctx, r, colors) { for(let i=0; i<8; i++) { let y = -i * (r*0.18); ctx.save(); ctx.translate(0, y); for(let s of [-1, 1]) { ctx.beginPath(); ctx.ellipse(s*r*0.1, 0, r*0.18, r*0.08, s*0.5, 0, Math.PI*2); ctx.fillStyle = colors[0]; ctx.fill(); } ctx.restore(); } }
-        function drawLily(ctx, r, colors) { for(let i=0; i<5; i++) { ctx.save(); ctx.rotate(i * Math.PI*2/5); ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(r*0.4, r*0.2, r*0.3, r*1.5, 0, r*1.7); ctx.fillStyle = colors[0]; ctx.fill(); ctx.restore(); } }
-        function drawOrchid(ctx, r, colors) { for(let i=0; i<3; i++) { ctx.save(); ctx.rotate(i * (Math.PI*2/3)); ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(r*0.7, r*0.1, r*0.4, r*1.2); ctx.fillStyle = colors[1]; ctx.fill(); ctx.restore(); } }
-
-        function drawStem(ctx, x, y, size, bloom, time, angleOffset = 0) {
-            const len = size * 2.0 * bloom;
-            const sway = Math.sin(time * 0.001 + angleOffset) * 5 * bloom;
-            const targetX = x + (angleOffset * size * 1.1) * bloom + sway;
-            const targetY = y - len;
-            ctx.beginPath();
-            ctx.moveTo(x, y + size * 0.1); 
-            ctx.bezierCurveTo(x, y, targetX - sway * 0.5, targetY + len * 0.4, targetX, targetY);
-            ctx.strokeStyle = '#142912';
-            ctx.lineWidth = Math.max(1.0, size * 0.06 * bloom);
+        function drawStem(ctx, x, y, size, bloom, time, angleOffset, isBouquet) {
+            const baseLen = size * 2.5 * bloom;
+            const sway = Math.sin(time * 0.001 + angleOffset) * 8 * bloom;
+            let tx = x + (angleOffset * size * (isBouquet ? 2.0 : 1.2)) * bloom + sway;
+            let ty = y - baseLen;
+            
+            ctx.beginPath(); ctx.moveTo(x, y);
+            ctx.quadraticCurveTo(x + sway*0.5, y - baseLen*0.5, tx, ty);
+            ctx.strokeStyle = "rgba(60, 120, 60, "+bloom+")";
+            ctx.lineWidth = size * 0.1 * bloom;
+            ctx.lineCap = 'round';
             ctx.stroke();
-            return { topX: targetX, topY: targetY, rotation: (angleOffset * 0.25) + (sway * 0.02) };
+            return { tx, ty, rot: (angleOffset * 0.4) };
         }
 
         function drawPlanet(ctx, p, time, cam) {
             let px = cx + (p.x - cam.x) * cam.zoom;
             let py = cy + (p.y - cam.y) * cam.zoom;
-            let pr = Math.max(0, p.radius * cam.zoom);
-
-            if (px < -pr*3 || px > width+pr*3 || py < -pr*3 || py > height+pr*3) return;
+            let pr = p.radius * cam.zoom;
+            if(px < -pr*4 || px > width+pr*4 || py < -pr*4 || py > height+pr*4) return;
 
             let isActive = (activePlanet === p);
-            let pAlpha = isActive ? Math.max(0, 1 - bloomProgress * 2.5) : 1;
+            let pAlpha = isActive ? Math.max(0, 1 - bloomProgress * 3) : 1;
 
-            if (pAlpha > 0.01) {
-                ctx.save();
-                ctx.translate(px, py);
-                let atm = ctx.createRadialGradient(0, 0, pr * 0.6, 0, 0, pr * 1.4);
-                atm.addColorStop(0, p.aura + (0.35 * pAlpha) + ')');
-                atm.addColorStop(1, p.aura + '0)');
-                ctx.fillStyle = atm;
-                ctx.beginPath(); ctx.arc(0, 0, pr * 1.4, 0, Math.PI * 2); ctx.fill();
+            if(pAlpha > 0.01) {
+                ctx.save(); ctx.translate(px, py);
+                if(p.hasRing) {
+                    ctx.beginPath(); ctx.ellipse(0, 0, pr*2.2, pr*0.5, 0.2, 0, Math.PI*2);
+                    ctx.strokeStyle = p.aura + (0.08 * pAlpha) + ")"; ctx.lineWidth = pr*0.15; ctx.stroke();
+                }
+                let atm = ctx.createRadialGradient(0,0, pr*0.6, 0,0, pr*1.6);
+                atm.addColorStop(0, p.aura + (0.3 * pAlpha) + ")"); atm.addColorStop(1, p.aura + "0)");
+                ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(0,0, pr*1.6, 0, Math.PI*2); ctx.fill();
                 
                 ctx.rotate(time * p.rotSpeed);
-                let core = ctx.createRadialGradient(-pr*0.3, -pr*0.3, 0, 0, 0, pr);
-                core.addColorStop(0, '#ffffff'); core.addColorStop(0.3, p.colors[0]); core.addColorStop(1, '#000000');
-                ctx.fillStyle = core;
-                ctx.beginPath(); ctx.arc(0, 0, pr, 0, Math.PI * 2); ctx.fill();
+                let core = ctx.createRadialGradient(-pr*0.3, -pr*0.3, 0, 0,0, pr);
+                core.addColorStop(0, "#fff"); core.addColorStop(0.3, p.colors[0]); core.addColorStop(1, "#050510");
+                ctx.fillStyle = core; ctx.beginPath(); ctx.arc(0,0, pr, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
             }
 
-            if (isActive && bloomProgress > 0.01) {
-                ctx.save();
-                ctx.translate(px, py);
-                let baseSize = pr * 0.7; 
-                if(p.isSpecial) drawDome(ctx, pr, bloomProgress);
-                for(let q=0; q < p.quantity; q++) {
-                    ctx.save();
-                    let angleOffset = (p.quantity > 1) ? (q - (p.quantity - 1) / 2) * 0.6 : 0;
-                    const { topX, topY, rotation } = drawStem(ctx, 0, 0, baseSize, bloomProgress, time, angleOffset);
-                    ctx.translate(topX, topY);
-                    ctx.scale(bloomProgress, bloomProgress);
-                    ctx.rotate(rotation);
-                    if(p.isSpecial) drawBlueRose(ctx, baseSize, p.colors, bloomProgress, time);
-                    else drawFlowerByType(ctx, p, baseSize);
+            if(isActive && bloomProgress > 0.01) {
+                ctx.save(); ctx.translate(px, py);
+                let fSize = pr * 0.7;
+                let isBouquet = (p.rarity === "JARDIM GALÁCTICO");
+                for(let i=0; i<p.quantity; i++) {
+                    let offset = (p.quantity > 1) ? (i - (p.quantity-1)/2) * 0.7 : 0;
+                    const { tx, ty, rot } = drawStem(ctx, 0, 0, fSize, bloomProgress, time, offset, isBouquet);
+                    ctx.save(); ctx.translate(tx, ty); ctx.rotate(rot); ctx.scale(bloomProgress, bloomProgress);
+                    drawFlower(ctx, p, fSize, time);
                     ctx.restore();
                 }
                 ctx.restore();
             }
         }
 
-        function loop(time) {
-            ctx.fillStyle = '#020105';
-            ctx.fillRect(0, 0, width, height);
+        function drawBackground() {
+            let bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, width);
+            bgGrad.addColorStop(0, '#0a0515');
+            bgGrad.addColorStop(1, '#020105');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0,0, width, height);
+        }
 
-            if (state === 'ZOOMING') {
-                cam.x += (cam.targetX - cam.x) * 0.08;
-                cam.y += (cam.targetY - cam.y) * 0.08;
-                cam.zoom += (cam.targetZoom - cam.zoom) * 0.08;
-                bloomProgress += (1 - bloomProgress) * 0.06;
-            } else if (state === 'RETURNING') {
-                cam.zoom += (1 - cam.zoom) * 0.12;
-                bloomProgress += (0 - bloomProgress) * 0.12;
+        function loop(time) {
+            drawBackground();
+
+            if(state === 'ZOOMING') {
+                cam.x += (cam.targetX - cam.x) * 0.07; cam.y += (cam.targetY - cam.y) * 0.07;
+                cam.zoom += (cam.targetZoom - cam.zoom) * 0.07; bloomProgress += (1 - bloomProgress) * 0.06;
+            } else if(state === 'RETURNING') {
+                cam.zoom += (0.8 - cam.zoom) * 0.1; bloomProgress += (0 - bloomProgress) * 0.15;
                 if(bloomProgress < 0.01) { state = 'EXPLORING'; activePlanet = null; }
             } else {
-                cam.x += vel.x; cam.y += vel.y;
-                vel.x *= 0.95; vel.y *= 0.95;
+                cam.x += vel.x; cam.y += vel.y; vel.x *= 0.94; vel.y *= 0.94;
             }
 
-            let sX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
-            let eX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
-            let sY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
-            let eY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
+            let sX = Math.floor((cam.x - cx/cam.zoom)/CHUNK_SIZE), eX = Math.ceil((cam.x + cx/cam.zoom)/CHUNK_SIZE);
+            let sY = Math.floor((cam.y - cy/cam.zoom)/CHUNK_SIZE), eY = Math.ceil((cam.y + cy/cam.zoom)/CHUNK_SIZE);
 
             for(let x=sX; x<=eX; x++) {
                 for(let y=sY; y<=eY; y++) {
-                    let chunkKey = `${x},${y}`;
-                    let chunk = chunks.get(chunkKey);
-                    if(!chunk) { chunk = generateChunk(x,y); chunks.set(chunkKey, chunk); }
+                    let key = `${x},${y}`; let chunk = chunks.get(key);
+                    if(!chunk) { chunk = generateChunk(x,y); chunks.set(key, chunk); }
                     
-                    ctx.fillStyle = '#ffffff';
+                    ctx.fillStyle = "#fff";
                     chunk.stars.forEach(s => {
                         let sx = cx + (s.x - cam.x) * s.z * cam.zoom;
                         let sy = cy + (s.y - cam.y) * s.z * cam.zoom;
-                        ctx.globalAlpha = 0.1 + Math.sin(time*0.001+s.phase)*0.2;
-                        ctx.beginPath(); ctx.arc(sx, sy, s.size * cam.zoom, 0, Math.PI*2); ctx.fill();
+                        if(sx > 0 && sx < width && sy > 0 && sy < height) {
+                            ctx.globalAlpha = 0.3 + Math.sin(time*0.001+s.phase)*0.5;
+                            ctx.beginPath(); ctx.arc(sx, sy, s.size * cam.zoom, 0, Math.PI*2); ctx.fill();
+                        }
                     });
                     ctx.globalAlpha = 1;
                     chunk.planets.forEach(p => drawPlanet(ctx, p, time, cam));
                 }
             }
-
-            fallingPetals = fallingPetals.filter(p => p.life > 0);
-            fallingPetals.forEach(p => {
-                p.y += p.vy; p.x += Math.sin(time*0.008 + p.offset) * 1.5;
-                p.life -= 0.008; p.rot += 0.04;
-                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
-                ctx.globalAlpha = p.life; ctx.fillStyle = '#00f2ff';
-                ctx.beginPath(); ctx.moveTo(0,0);
-                ctx.bezierCurveTo(5*cam.zoom, -2*cam.zoom, 7*cam.zoom, 5*cam.zoom, 0, 7*cam.zoom);
-                ctx.fill(); ctx.restore();
-            });
-            ctx.globalAlpha = 1;
             requestAnimationFrame(loop);
         }
 
-        let isDown = false, lastPos = {x:0,y:0}, startPos = {x:0,y:0};
-        
-        function handleStart(ex, ey) {
-            if(state === 'ZOOMING' && activePlanet && activePlanet.isSpecial) {
-                fallingPetals.push({
-                    x: ex, y: ey, vy: 1 + Math.random(), rot: Math.random(), 
-                    life: 1.0, offset: Math.random()*100
-                });
-                return;
-            }
+        let isDown = false, lastPos = {x:0, y:0}, startPos = {x:0, y:0};
+        window.addEventListener('pointerdown', e => {
             if(state !== 'EXPLORING') return;
-            isDown = true; lastPos = {x:ex, y:ey}; startPos = {x:ex, y:ey}; vel = {x:0, y:0};
-        }
-
-        function handleMove(ex, ey) {
+            isDown = true; lastPos = startPos = {x: e.clientX, y: e.clientY}; vel = {x:0, y:0};
+        });
+        window.addEventListener('pointermove', e => {
             if(!isDown) return;
-            let dx = ex - lastPos.x, dy = ey - lastPos.y;
+            let dx = e.clientX - lastPos.x, dy = e.clientY - lastPos.y;
             cam.x -= dx/cam.zoom; cam.y -= dy/cam.zoom;
-            vel = {x: -dx*0.12, y: -dy*0.12};
-            lastPos = {x:ex, y:ey};
-        }
-
-        function handleEnd(ex, ey) {
+            vel = {x: -dx*0.15, y: -dy*0.15}; lastPos = {x:e.clientX, y:e.clientY};
+        });
+        window.addEventListener('pointerup', e => {
             if(!isDown) return; isDown = false;
-            if(Math.hypot(ex - startPos.x, ey - startPos.y) < 10) checkClick(ex, ey);
-        }
-
-        window.addEventListener('pointerdown', e => handleStart(e.clientX, e.clientY));
-        window.addEventListener('pointermove', e => handleMove(e.clientX, e.clientY));
-        window.addEventListener('pointerup', e => handleEnd(e.clientX, e.clientY));
+            if(Math.hypot(e.clientX - startPos.x, e.clientY - startPos.y) < 10) checkClick(e.clientX, e.clientY);
+        });
 
         function checkClick(mx, my) {
-            let sX = Math.floor((cam.x - (width/2)/cam.zoom)/CHUNK_SIZE);
-            let eX = Math.ceil((cam.x + (width/2)/cam.zoom)/CHUNK_SIZE);
-            let sY = Math.floor((cam.y - (height/2)/cam.zoom)/CHUNK_SIZE);
-            let eY = Math.ceil((cam.y + (height/2)/cam.zoom)/CHUNK_SIZE);
+            for(let chunk of chunks.values()) {
+                for(let p of chunk.planets) {
+                    let px = cx + (p.x - cam.x) * cam.zoom; let py = cy + (p.y - cam.y) * cam.zoom;
+                    if(Math.hypot(mx-px, my-py) < p.radius * cam.zoom * 2.5) {
+                        activePlanet = p; state = 'ZOOMING';
+                        
+                        // CORREÇÃO DE CENTRALIZAÇÃO:
+                        // cam.targetY ajustado para que o planeta fique no centro vertical, 
+                        // subtraindo um pouco para a flor (que cresce para cima) ficar bem no meio da parte escura.
+                        cam.targetX = p.x; 
+                        cam.targetY = p.y - (height * 0.1 / cam.zoom); 
+                        
+                        // Redução suave no zoom para caber o buquê no mobile
+                        cam.targetZoom = (height * 0.18) / p.radius; 
 
-            for(let x=sX; x<=eX; x++) {
-                for(let y=sY; y<=eY; y++) {
-                    let chunk = chunks.get(`${x},${y}`);
-                    if(!chunk) continue;
-                    for(let p of chunk.planets) {
-                        let px = cx + (p.x - cam.x) * cam.zoom;
-                        let py = cy + (p.y - cam.y) * cam.zoom;
-                        let hit = p.radius * cam.zoom * (isMobile ? 2.2 : 1.4);
-                        if(Math.hypot(mx-px, my-py) < hit) {
-                            activePlanet = p; state = 'ZOOMING';
-                            cam.targetX = p.x; 
-                            
-                            // SUBINDO AS FLORES: 
-                            // Reduzi o offset negativo para que a câmera aponte um pouco mais para baixo,
-                            // o que faz com que a flor suba visualmente no frame.
-                            // Antes era height * 0.15, agora reduzi para 0.05 para centrar melhor no frame útil.
-                            cam.targetY = p.y - (height * 0.05 / cam.zoom);
-                            
-                            // Zoom levemente mais afastado para não cortar as pétalas inferiores
-                            cam.targetZoom = (height * (isMobile ? 0.28 : 0.24)) / p.radius;
-                            
-                            const rl = document.getElementById('rarity-label');
-                            rl.innerText = p.rarity || 'COMUM';
-                            rl.className = 'rarity-tag' + (p.isSpecial ? ' special' : '');
-                            document.getElementById('flower-name').innerText = p.nome;
-                            document.getElementById('flower-desc').innerText = p.mensagem;
-                            document.getElementById('ui-layer').classList.add('active');
-                            document.getElementById('interaction-hint').style.display = p.isSpecial ? 'block' : 'none';
-                            return;
-                        }
+                        const rl = document.getElementById('rarity-label');
+                        rl.innerText = p.rarity;
+                        rl.className = 'rarity-tag' + (p.rarity === 'JARDIM GALÁCTICO' ? ' galactico' : (p.isSpecial ? ' special' : ''));
+                        document.getElementById('flower-name').innerText = p.nome;
+                        document.getElementById('flower-desc').innerText = p.mensagem;
+                        document.getElementById('ui-layer').classList.add('active');
+                        return;
                     }
                 }
             }
         }
 
-        document.getElementById('btn-back').onclick = (e) => {
-            e.stopPropagation();
-            state = 'RETURNING';
-            document.getElementById('ui-layer').classList.remove('active');
+        document.getElementById('btn-back').onclick = () => {
+            state = 'RETURNING'; document.getElementById('ui-layer').classList.remove('active');
         };
 
         requestAnimationFrame(loop);
