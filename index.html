@@ -25,48 +25,47 @@
             display: flex; flex-direction: column; 
             justify-content: flex-end; 
             align-items: center;
-            padding: 30px; pointer-events: none; opacity: 0; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px; pointer-events: none; opacity: 0; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         #ui-layer.active { opacity: 1; pointer-events: auto; }
 
         .content-card {
-            max-width: 420px; width: 100%; text-align: center; color: #ffffff;
-            background: linear-gradient(180deg, rgba(20, 10, 40, 0.9) 0%, rgba(5, 2, 15, 0.95) 100%);
-            padding: 40px; border-radius: 40px; transform: translateY(40px);
+            max-width: 380px; width: 100%; text-align: center; color: #ffffff;
+            background: linear-gradient(180deg, rgba(20, 10, 40, 0.85) 0%, rgba(5, 2, 15, 0.9) 100%);
+            padding: 25px; border-radius: 30px; transform: translateY(40px);
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 80px rgba(0,0,0,0.8), inset 0 0 20px rgba(150, 100, 255, 0.1);
-            margin-bottom: 20px;
+            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            margin-bottom: env(safe-area-inset-bottom, 10px);
         }
         #ui-layer.active .content-card { transform: translateY(0); }
 
         .rarity-tag {
-            display: inline-block; font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
-            padding: 8px 20px; border-radius: 30px; margin-bottom: 25px;
+            display: inline-block; font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+            padding: 6px 15px; border-radius: 20px; margin-bottom: 15px;
             background: rgba(255,255,255,0.05); color: #c084fc; font-weight: 700;
             border: 1px solid rgba(192, 132, 252, 0.3);
         }
         .rarity-tag.galactico { 
             background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899); 
-            color: #fff; box-shadow: 0 0 30px rgba(168, 85, 247, 0.4); border: none;
+            color: #fff; box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); border: none;
         }
 
-        h1 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 15px; background: linear-gradient(to bottom, #fff, #b992ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.8; opacity: 0.85; margin-bottom: 20px; color: #d1d5db; font-style: italic; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; background: linear-gradient(to bottom, #fff, #b992ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { font-family: 'Playfair Display', serif; font-size: 0.95rem; line-height: 1.6; opacity: 0.85; margin-bottom: 15px; color: #d1d5db; font-style: italic; }
         
         .interaction-hint {
-            font-size: 0.7rem; color: #fbcfe8; opacity: 0.8; letter-spacing: 1.5px;
-            margin-bottom: 25px; animation: pulse 2.5s infinite ease-in-out;
+            font-size: 0.65rem; color: #fbcfe8; opacity: 0.8; letter-spacing: 1px;
+            margin-bottom: 15px; animation: pulse 2.5s infinite ease-in-out;
         }
         @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; text-shadow: 0 0 8px #fbcfe8; } }
 
         .btn-back {
-            background: #ffffff; color: #000; padding: 16px 40px; border-radius: 50px; font-size: 0.85rem;
+            background: #ffffff; color: #000; padding: 12px 30px; border-radius: 50px; font-size: 0.75rem;
             text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.4s;
-            font-weight: 700; border: none; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            font-weight: 700; border: none;
             pointer-events: auto;
         }
-        .btn-back:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
@@ -79,7 +78,7 @@
             <h1 id="flower-name">Nome da Flor</h1>
             <p id="flower-desc">Descrição.</p>
             <div class="interaction-hint">✧ Toque na flor para soprar suas pétalas ✧</div>
-            <button class="btn-back" id="btn-back">Voltar ao Espaço</button>
+            <button class="btn-back" id="btn-back">Explorar Mais</button>
         </div>
     </div>
 
@@ -116,15 +115,11 @@
         const chunks = new Map();
         const CHUNK_SIZE = 1600;
 
-        // Formas românticas para as constelações (Coordenadas relativas de -1 a 1)
         const constellShapes = [
-            // Coração
             { name: "Coração", pts: [{x: 0, y: 0.6}, {x: -0.6, y: -0.1}, {x: -0.4, y: -0.6}, {x: 0, y: -0.3}, {x: 0.4, y: -0.6}, {x: 0.6, y: -0.1}, {x: 0, y: 0.6}] },
-            // Alanna (Representação simplificada em pontos)
             { name: "Alanna", pts: [{x: -0.8, y: 0.4}, {x: -0.6, y: -0.4}, {x: -0.4, y: 0.4}, {x: -0.7, y: 0}, {x: -0.5, y: 0}, {x: -0.2, y: -0.4}, {x: -0.2, y: 0.4}, {x: 0, y: 0.4}, {x: 0.2, y: -0.4}, {x: 0.2, y: 0.4}, {x: 0.4, y: 0.4}, {x: 0.6, y: -0.4}, {x: 0.6, y: 0.4}, {x: 0.8, y: 0.4}] },
-            // Eu te amo
-            { name: "Love", pts: [{x: -0.6, y: -0.4}, {x: -0.6, y: 0.4}, {x: -0.3, y: 0.4}, {x: -0.1, y: 0}, {x: 0.1, y: 0.4}, {x: 0.3, y: 0.4}, {x: 0.3, y: -0.4}, {x: 0, y: -0.6}] },
-            // Símbolo do Infinito
+            { name: "Te Amo", pts: [{x: -0.6, y: -0.4}, {x: -0.6, y: 0.4}, {x: -0.3, y: 0.4}, {x: -0.1, y: 0}, {x: 0.1, y: 0.4}, {x: 0.3, y: 0.4}, {x: 0.3, y: -0.4}, {x: 0, y: -0.6}] },
+            { name: "I Love You", pts: [{x: -0.5, y: -0.3}, {x: 0.5, y: -0.3}, {x: 0.5, y: 0.3}, {x: -0.5, y: 0.3}, {x: -0.5, y: -0.3}] },
             { name: "Infinito", pts: [{x: 0, y: 0}, {x: 0.6, y: -0.4}, {x: 0.9, y: 0}, {x: 0.6, y: 0.4}, {x: 0, y: 0}, {x: -0.6, y: -0.4}, {x: -0.9, y: 0}, {x: -0.6, y: 0.4}, {x: 0, y: 0}] }
         ];
 
@@ -161,7 +156,7 @@
                     y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE,
                     size: 300 + random() * 400,
                     isHeart: random() < 0.45, 
-                    hue: random() * 30 + 330, // Tons rosados e vermelhos
+                    hue: random() * 30 + 330,
                     phase: random() * Math.PI * 2
                 });
             }
@@ -170,10 +165,10 @@
                 stars.push({ 
                     x: cx_idx * CHUNK_SIZE + random() * CHUNK_SIZE, 
                     y: cy_idx * CHUNK_SIZE + random() * CHUNK_SIZE, 
-                    z: random() * 0.8 + 0.1, size: random() * 2 + 0.2, phase: random() * Math.PI * 2 
+                    z: random() * 0.8 + 0.1, size: random() * 1.8 + 0.2, phase: random() * Math.PI * 2 
                 });
             }
-            if(random() < 0.7) {
+            if(random() < 0.75) {
                 const isBlue = random() < 0.015;
                 if(isBlue) {
                     planets.push({ ...BLUE_ROSE_DATA, x: cx_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5, y: cy_idx * CHUNK_SIZE + CHUNK_SIZE * 0.5, radius: 50, seed: random() * 1000, rotSpeed: 0.001, quantity: 1, isSpecial: true, hasRing: true });
@@ -181,7 +176,7 @@
                     let typeIdx = Math.floor(random() * flowerData.length);
                     let roll = random();
                     let qty = 1, rarity = "COMUM";
-                    if(roll > 0.96) { qty = 6; rarity = "SISTEMA FLORAL"; }
+                    if(roll > 0.96) { qty = 5; rarity = "SISTEMA FLORAL"; }
                     else if(roll > 0.85) { qty = 3; rarity = "LENDÁRIO"; }
                     else if(roll > 0.65) { qty = 2; rarity = "RARO"; }
                     planets.push({
@@ -197,12 +192,12 @@
             return { stars, planets, nebulae };
         }
 
-        // --- SISTEMAS DE DESENHO ARTÍSTICO ---
+        // --- DRAWING FUNCTIONS (SIMPLIFIED FOR PERFORMANCE) ---
 
         function drawRose(ctx, r, colors, time) {
-            for(let l=0; l<6; l++) {
-                let count = 5 + l;
-                let lr = r * (1 - l*0.15);
+            for(let l=0; l<5; l++) {
+                let count = 4 + l;
+                let lr = r * (1 - l*0.18);
                 ctx.save();
                 ctx.rotate(time * 0.0004 * (l+1));
                 for(let i=0; i<count; i++) {
@@ -211,11 +206,10 @@
                     let grad = ctx.createRadialGradient(0,0,0,0,lr,lr);
                     grad.addColorStop(0, colors[0]); grad.addColorStop(1, colors[1]);
                     ctx.fillStyle = grad;
-                    ctx.globalAlpha = 1 - (l*0.1);
-                    ctx.beginPath();
-                    ctx.moveTo(0,0);
-                    ctx.bezierCurveTo(lr, -lr*0.6, lr*1.5, lr, 0, lr);
-                    ctx.bezierCurveTo(-lr*1.5, lr, -lr, -lr*0.6, 0, 0);
+                    ctx.globalAlpha = 1 - (l*0.15);
+                    ctx.beginPath(); ctx.moveTo(0,0);
+                    ctx.bezierCurveTo(lr, -lr*0.6, lr*1.4, lr, 0, lr);
+                    ctx.bezierCurveTo(-lr*1.4, lr, -lr, -lr*0.6, 0, 0);
                     ctx.fill();
                     ctx.restore();
                 }
@@ -224,18 +218,16 @@
         }
 
         function drawSunflower(ctx, r, colors, time) {
-            for(let i=0; i<32; i++) {
-                let ang = i * Math.PI*2/32;
+            for(let i=0; i<28; i++) {
+                let ang = i * Math.PI*2/28;
                 let len = r * (1.1 + Math.sin(time*0.01 + i)*0.1);
-                ctx.save();
-                ctx.rotate(ang);
+                ctx.save(); ctx.rotate(ang);
                 ctx.beginPath(); ctx.moveTo(0,0);
                 ctx.quadraticCurveTo(r*0.3, len*0.5, 0, len);
                 ctx.quadraticCurveTo(-r*0.3, len*0.5, 0, 0);
                 let g = ctx.createLinearGradient(0,0,0,len);
                 g.addColorStop(0, colors[1]); g.addColorStop(1, colors[0]);
-                ctx.fillStyle = g; ctx.fill();
-                ctx.restore();
+                ctx.fillStyle = g; ctx.fill(); ctx.restore();
             }
             ctx.beginPath(); ctx.arc(0,0,r*0.4,0,Math.PI*2);
             ctx.fillStyle = "#000"; ctx.fill();
@@ -247,8 +239,7 @@
                 ctx.beginPath(); ctx.moveTo(0,0);
                 ctx.bezierCurveTo(size, -size*0.5, size*0.5, -size*1.8, 0, -size*2);
                 ctx.bezierCurveTo(-size*0.5, -size*1.8, -size, -size*0.5, 0, 0);
-                ctx.fillStyle = color; ctx.fill();
-                ctx.restore();
+                ctx.fillStyle = color; ctx.fill(); ctx.restore();
             };
             drawLeaf(0.3, r, colors[1]); drawLeaf(-0.3, r, colors[1]); drawLeaf(0, r*1.1, colors[0]);
         }
@@ -258,8 +249,7 @@
                 ctx.save(); ctx.rotate(i * Math.PI/3);
                 ctx.beginPath(); ctx.moveTo(0,0);
                 ctx.bezierCurveTo(r, r, -r, r*2, 0, r*2.5);
-                ctx.strokeStyle = colors[2]; ctx.lineWidth = r*0.1; ctx.stroke();
-                ctx.restore();
+                ctx.strokeStyle = colors[2]; ctx.lineWidth = r*0.1; ctx.stroke(); ctx.restore();
             }
         }
 
@@ -267,8 +257,7 @@
             for(let i=0; i<12; i++) {
                 ctx.save(); ctx.rotate(i * Math.PI/6 + time*0.0005);
                 ctx.beginPath(); ctx.ellipse(0, r*0.8, r*0.15, r*0.7, 0, 0, Math.PI*2);
-                ctx.fillStyle = "#fff"; ctx.fill();
-                ctx.restore();
+                ctx.fillStyle = "#fff"; ctx.fill(); ctx.restore();
             }
             ctx.beginPath(); ctx.arc(0,0,r*0.35,0,Math.PI*2);
             ctx.fillStyle = colors[1]; ctx.fill();
@@ -305,22 +294,22 @@
         }
 
         function spawnPetals(p, startX = null, startY = null) {
-            for(let i=0; i<20; i++) {
+            for(let i=0; i<15; i++) {
                 particles.push({
-                    x: startX ? (startX - cx)/cam.zoom + cam.x + (Math.random()-0.5)*30 : p.x + (Math.random()-0.5)*100,
-                    y: startY ? (startY - cy)/cam.zoom + cam.y + (Math.random()-0.5)*30 : p.y - 300,
-                    vx: (Math.random()-0.5)*8, vy: Math.random()*3 + 1,
-                    size: Math.random()*8 + 4, color: p.colors[0],
-                    life: 1.2, rot: Math.random()*Math.PI*2, rotV: (Math.random()-0.5)*0.1
+                    x: startX ? (startX - cx)/cam.zoom + cam.x : p.x + (Math.random()-0.5)*100,
+                    y: startY ? (startY - cy)/cam.zoom + cam.y : p.y - 250,
+                    vx: (Math.random()-0.5)*6, vy: Math.random()*2 + 1,
+                    size: Math.random()*6 + 3, color: p.colors[0],
+                    life: 1.0, rot: Math.random()*Math.PI*2, rotV: (Math.random()-0.5)*0.08
                 });
             }
         }
 
         function drawFlower(ctx, p, size, time) {
             ctx.save();
-            let heartbeat = Math.pow(Math.sin(time * 0.003), 4) + Math.pow(Math.sin(time * 0.003 + 0.3), 4);
-            ctx.shadowBlur = (20 + heartbeat * 30) * bloomProgress;
-            ctx.shadowColor = p.colors[0];
+            let pulse = Math.pow(Math.sin(time * 0.003), 4) * 0.2 + 1;
+            ctx.scale(pulse, pulse);
+            ctx.shadowBlur = 20 * bloomProgress; ctx.shadowColor = p.colors[0];
             
             switch(p.id) {
                 case 'rosa': case 'blue-rose': drawRose(ctx, size, p.colors, time); break;
@@ -336,16 +325,16 @@
 
         function drawStem(ctx, x, y, size, bloom, time, angleOffset) {
             const baseLen = size * 5.5 * bloom;
-            const sway = Math.sin(time * 0.001 + angleOffset) * 12 * bloom;
-            let tx = x + (angleOffset * size * 2.5) * bloom + sway;
+            const sway = Math.sin(time * 0.001 + angleOffset) * 10 * bloom;
+            let tx = x + (angleOffset * size * 2) * bloom + sway;
             let ty = y - baseLen;
             ctx.beginPath(); ctx.moveTo(x, y);
-            ctx.quadraticCurveTo(x + sway*0.4, y - baseLen*0.5, tx, ty);
+            ctx.quadraticCurveTo(x + sway*0.3, y - baseLen*0.4, tx, ty);
             let stemGrad = ctx.createLinearGradient(x, y, tx, ty);
             stemGrad.addColorStop(0, "rgba(20, 10, 30, 0)"); 
-            stemGrad.addColorStop(1, "rgba(100, 255, 150, "+bloom*0.6+")");
-            ctx.strokeStyle = stemGrad; ctx.lineWidth = size * 0.1 * bloom; ctx.lineCap = 'round'; ctx.stroke();
-            return { tx, ty, rot: (angleOffset * 0.15) };
+            stemGrad.addColorStop(1, "rgba(120, 255, 170, "+bloom*0.5+")");
+            ctx.strokeStyle = stemGrad; ctx.lineWidth = size * 0.08 * bloom; ctx.stroke();
+            return { tx, ty, rot: (angleOffset * 0.12) };
         }
 
         function drawPlanet(ctx, p, time, cam) {
@@ -365,17 +354,17 @@
                 ctx.fillStyle = atm; ctx.beginPath(); ctx.arc(0,0, pr*2.2, 0, Math.PI*2); ctx.fill();
                 
                 ctx.rotate(time * p.rotSpeed);
-                let core = ctx.createRadialGradient(-pr*0.3, -pr*0.3, 0, 0,0, pr);
-                core.addColorStop(0, "#fff"); core.addColorStop(0.2, p.colors[0]); core.addColorStop(1, "#0a0510");
+                let core = ctx.createRadialGradient(-pr*0.2, -pr*0.2, 0, 0,0, pr);
+                core.addColorStop(0, "#fff"); core.addColorStop(0.3, p.colors[0]); core.addColorStop(1, "#0a0510");
                 ctx.fillStyle = core; ctx.beginPath(); ctx.arc(0,0, pr, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
             }
 
             if(isActive && bloomProgress > 0.01) {
                 ctx.save(); ctx.translate(px, py);
-                let fSize = pr * 1.4;
+                let fSize = pr * 1.5;
                 for(let i=0; i<p.quantity; i++) {
-                    let offset = (p.quantity > 1) ? (i - (p.quantity-1)/2) * 0.6 : 0;
+                    let offset = (p.quantity > 1) ? (i - (p.quantity-1)/2) * 0.7 : 0;
                     const { tx, ty, rot } = drawStem(ctx, 0, 0, fSize, bloomProgress, time, offset);
                     ctx.save(); ctx.translate(tx, ty); ctx.rotate(rot); ctx.scale(bloomProgress, bloomProgress);
                     drawFlower(ctx, p, fSize, time);
@@ -385,27 +374,17 @@
             }
         }
 
-        function drawBackground() {
-            let bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, width);
-            bgGrad.addColorStop(0, '#090514'); bgGrad.addColorStop(1, '#020005');
-            ctx.fillStyle = bgGrad; ctx.fillRect(0,0, width, height);
-        }
-
         function loop(time) {
-            drawBackground();
+            ctx.fillStyle = '#020005'; ctx.fillRect(0,0, width, height);
             
-            if (Math.abs(vel.x) < 0.1 && Math.abs(vel.y) < 0.1 && !isDown && state === 'EXPLORING') {
-                idleTime++;
-            } else {
-                idleTime = 0;
-                activeConstellation = null; 
-            }
+            if (Math.abs(vel.x) < 0.1 && Math.abs(vel.y) < 0.1 && !isDown && state === 'EXPLORING') idleTime++;
+            else { idleTime = 0; activeConstellation = null; }
 
             if(state === 'ZOOMING') {
-                cam.x += (cam.targetX - cam.x) * 0.08;
-                cam.y += (cam.targetY - cam.y) * 0.08;
-                cam.zoom += (cam.targetZoom - cam.zoom) * 0.08;
-                bloomProgress += (1 - bloomProgress) * 0.08;
+                cam.x += (cam.targetX - cam.x) * 0.07;
+                cam.y += (cam.targetY - cam.y) * 0.07;
+                cam.zoom += (cam.targetZoom - cam.zoom) * 0.07;
+                bloomProgress += (1 - bloomProgress) * 0.07;
             } else if(state === 'RETURNING') {
                 cam.zoom += (0.52 - cam.zoom) * 0.1;
                 bloomProgress += (0 - bloomProgress) * 0.12;
@@ -429,29 +408,20 @@
                         let ny = cy + (n.y - cam.y) * cam.zoom;
                         let nSize = n.size * cam.zoom;
                         if(nx > -nSize && nx < width+nSize && ny > -nSize && ny < height+nSize) {
-                            let pulse = Math.sin(time * 0.001 + n.phase) * 0.15 + 1;
+                            let pulse = Math.sin(time * 0.001 + n.phase) * 0.1 + 1;
+                            ctx.save(); ctx.translate(nx, ny); ctx.scale(pulse, pulse);
+                            ctx.beginPath();
                             if(n.isHeart) {
-                                ctx.save(); ctx.translate(nx, ny);
-                                ctx.scale(pulse, pulse);
-                                ctx.beginPath();
-                                let topY = -nSize*0.3;
-                                ctx.moveTo(0, topY);
+                                let topY = -nSize*0.3; ctx.moveTo(0, topY);
                                 ctx.bezierCurveTo(nSize*0.5, -nSize*0.8, nSize*1.2, nSize*0.2, 0, nSize*0.9);
                                 ctx.bezierCurveTo(-nSize*1.2, nSize*0.2, -nSize*0.5, -nSize*0.8, 0, topY);
-                                
-                                let nGrad = ctx.createRadialGradient(0,0,0,0,0,nSize);
-                                nGrad.addColorStop(0, `hsla(${n.hue}, 90%, 65%, 0.15)`);
-                                nGrad.addColorStop(0.5, `hsla(${n.hue}, 80%, 50%, 0.04)`);
-                                nGrad.addColorStop(1, 'transparent');
-                                
-                                ctx.fillStyle = nGrad;
-                                ctx.shadowBlur = nSize * 0.6; ctx.shadowColor = `hsla(${n.hue}, 100%, 70%, 0.2)`;
-                                ctx.fill(); ctx.restore();
                             } else {
-                                let grad = ctx.createRadialGradient(nx, ny, 0, nx, ny, nSize * pulse);
-                                grad.addColorStop(0, `hsla(${n.hue}, 60%, 40%, 0.06)`); grad.addColorStop(1, 'transparent');
-                                ctx.fillStyle = grad; ctx.fillRect(nx-nSize*2, ny-nSize*2, nSize*4, nSize*4);
+                                ctx.arc(0,0, nSize, 0, Math.PI*2);
                             }
+                            let nGrad = ctx.createRadialGradient(0,0,0,0,0,nSize);
+                            nGrad.addColorStop(0, `hsla(${n.hue}, 90%, 65%, 0.12)`);
+                            nGrad.addColorStop(1, 'transparent');
+                            ctx.fillStyle = nGrad; ctx.fill(); ctx.restore();
                         }
                     });
 
@@ -459,9 +429,9 @@
                         let sx = cx + (s.x - cam.x) * s.z * cam.zoom;
                         let sy = cy + (s.y - cam.y) * s.z * cam.zoom;
                         if(sx > -10 && sx < width+10 && sy > -10 && sy < height+10) {
-                            ctx.globalAlpha = 0.3 + Math.sin(time*0.001+s.phase)*0.3;
+                            ctx.globalAlpha = 0.2 + Math.sin(time*0.001+s.phase)*0.3;
                             ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(sx, sy, s.size * cam.zoom, 0, Math.PI*2); ctx.fill();
-                            if (idleTime > 80) visibleStars.push({x: sx, y: sy, original: s});
+                            if (idleTime > 80) visibleStars.push({x: sx, y: sy});
                         }
                     });
                     ctx.globalAlpha = 1;
@@ -469,14 +439,12 @@
                 }
             }
 
-            // Gerar Constelação Mágica
-            if (idleTime === 100 && visibleStars.length > 10) {
-                let validCenters = visibleStars.filter(s => s.x > width*0.2 && s.x < width*0.8 && s.y > height*0.2 && s.y < height*0.8);
+            // Constellation generation
+            if (idleTime === 100 && visibleStars.length > 15) {
+                let validCenters = visibleStars.filter(s => s.x > width*0.2 && s.x < width*0.8 && s.y > height*0.2 && s.y < height*0.6);
                 let centerPoint = validCenters.length > 0 ? validCenters[Math.floor(Math.random() * validCenters.length)] : visibleStars[0];
-                
                 let shapeObj = constellShapes[Math.floor(Math.random() * constellShapes.length)];
-                let scale = 200 + Math.random() * 100; 
-                
+                let scale = 180 + Math.random() * 80; 
                 let mappedStars = [];
                 for(let pt of shapeObj.pts) {
                     let targetX = centerPoint.x + pt.x * scale;
@@ -491,53 +459,38 @@
                 activeConstellation = { stars: mappedStars, label: shapeObj.name };
             }
 
-            // Desenhar Constelação Ativa
             if (idleTime > 100 && activeConstellation) {
-                let opacity = Math.min(1, (idleTime-100)*0.01) * 0.7;
-                ctx.strokeStyle = `rgba(220, 200, 255, ${opacity})`;
-                ctx.lineWidth = 1.2;
-                ctx.shadowBlur = 20; ctx.shadowColor = `rgba(180, 150, 255, ${opacity})`;
-                
+                let opacity = Math.min(1, (idleTime-100)*0.01) * 0.6;
+                ctx.strokeStyle = `rgba(200, 220, 255, ${opacity})`; ctx.lineWidth = 1;
                 ctx.beginPath();
-                for(let i=0; i<activeConstellation.stars.length; i++) {
-                    let s = activeConstellation.stars[i];
-                    if(i===0) ctx.moveTo(s.x, s.y);
-                    else ctx.lineTo(s.x, s.y);
-                }
+                activeConstellation.stars.forEach((s, i) => i === 0 ? ctx.moveTo(s.x, s.y) : ctx.lineTo(s.x, s.y));
                 ctx.stroke();
-                
-                ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 1.5})`;
-                for(let s of activeConstellation.stars) {
-                    ctx.beginPath(); ctx.arc(s.x, s.y, 3, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                activeConstellation.stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, 2, 0, Math.PI*2); ctx.fill(); });
+                if (opacity > 0.4) {
+                    ctx.font = "italic 13px 'Playfair Display'"; ctx.textAlign = "center";
+                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity - 0.2})`;
+                    ctx.fillText(activeConstellation.label, activeConstellation.stars[0].x, activeConstellation.stars[0].y - 15);
                 }
-
-                // Texto da Constelação
-                if (opacity > 0.5) {
-                    ctx.font = "italic 14px 'Playfair Display'";
-                    ctx.textAlign = "center";
-                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity - 0.3})`;
-                    ctx.fillText(activeConstellation.label, activeConstellation.stars[0].x, activeConstellation.stars[0].y - 20);
-                }
-                ctx.shadowBlur = 0;
             }
 
             trailParticles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; p.life -= 0.015;
+                p.x += p.vx; p.y += p.vy; p.life -= 0.018;
                 if(p.life <= 0) trailParticles.splice(i, 1);
                 else {
                     ctx.fillStyle = p.color; ctx.globalAlpha = p.life;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2); ctx.fill();
                 }
             });
             ctx.globalAlpha = 1;
 
             for(let i=particles.length-1; i>=0; i--) {
                 let p = particles[i];
-                p.x += p.vx; p.y += p.vy; p.rot += p.rotV; p.life -= 0.005;
+                p.x += p.vx; p.y += p.vy; p.rot += p.rotV; p.life -= 0.006;
                 if(p.life <= 0) { particles.splice(i, 1); continue; }
                 let px = cx + (p.x - cam.x) * cam.zoom; let py = cy + (p.y - cam.y) * cam.zoom;
                 ctx.save(); ctx.translate(px, py); ctx.rotate(p.rot); ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
-                ctx.beginPath(); ctx.ellipse(0,0, p.size*cam.zoom, (p.size/2)*cam.zoom, 0, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.ellipse(0,0, p.size*cam.zoom, (p.size/2.5)*cam.zoom, 0, 0, Math.PI*2); ctx.fill();
                 ctx.restore();
             }
             requestAnimationFrame(loop);
@@ -551,26 +504,22 @@
             }
             if(state !== 'EXPLORING' || e.target.closest('.content-card')) return;
             isDown = true; lastPos = startPos = {x: e.clientX, y: e.clientY}; vel = {x:0, y:0};
-            idleTime = 0; activeConstellation = null;
         });
         window.addEventListener('pointermove', e => {
-            idleTime = 0; activeConstellation = null;
             if(!isDown) return;
             let dx = e.clientX - lastPos.x, dy = e.clientY - lastPos.y;
             cam.x -= dx/cam.zoom; cam.y -= dy/cam.zoom;
-            vel = {x: -dx*0.2, y: -dy*0.2}; lastPos = {x:e.clientX, y:e.clientY};
-
+            vel = {x: -dx*0.15, y: -dy*0.15}; lastPos = {x:e.clientX, y:e.clientY};
             if (state === 'EXPLORING') {
                 trailParticles.push({
-                    x: e.clientX, y: e.clientY,
-                    vx: (Math.random()-0.5), vy: (Math.random()-0.5),
-                    life: 1, color: `hsla(${Math.random()*360}, 80%, 70%, 0.8)`
+                    x: e.clientX, y: e.clientY, vx: (Math.random()-0.5), vy: (Math.random()-0.5),
+                    life: 1, color: `hsla(${Math.random()*360}, 70%, 80%, 0.6)`
                 });
             }
         });
         window.addEventListener('pointerup', e => {
             if(!isDown) return; isDown = false;
-            if(Math.hypot(e.clientX - startPos.x, e.clientY - startPos.y) < 15) checkClick(e.clientX, e.clientY);
+            if(Math.hypot(e.clientX - startPos.x, e.clientY - startPos.y) < 20) checkClick(e.clientX, e.clientY);
         });
 
         function checkClick(mx, my) {
@@ -584,14 +533,16 @@
                     for(let p of chunk.planets) {
                         let px = cx + (p.x - cam.x) * cam.zoom; 
                         let py = cy + (p.y - cam.y) * cam.zoom;
-                        if(Math.hypot(mx-px, my-py) < p.radius * cam.zoom * 4) {
+                        if(Math.hypot(mx-px, my-py) < p.radius * cam.zoom * 5) {
                             activePlanet = p; 
                             state = 'ZOOMING';
                             
-                            const targetZoom = (height * 0.045) / p.radius;
+                            // Ajustes de Zoom e Posição (Flor no topo, UI livre embaixo)
+                            const targetZoom = (height * 0.03) / p.radius; 
                             cam.targetZoom = targetZoom;
                             cam.targetX = p.x;
-                            cam.targetY = p.y - (height * 0.15) / targetZoom;
+                            // Offset vertical: coloca a flor na metade superior da tela
+                            cam.targetY = p.y - (height * 0.2) / targetZoom;
 
                             const rl = document.getElementById('rarity-label');
                             rl.innerText = p.rarity;
